@@ -19,10 +19,9 @@ COPY . .
 EXPOSE 8000
 
 # entrypoint runs migrations + seed, then starts uvicorn
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-# Strip CR characters so the script runs even when checked out on Windows (CRLF).
-RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN sed -i 's/\r$//' /app/docker-entrypoint.sh && chmod +x /app/docker-entrypoint.sh
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 # Bind the port the platform assigns. Managed hosts (Render, Railway, Fly) inject
 # $PORT and route traffic there; a hardcoded port makes the health check fail.
 # Falls back to 8000 for docker-compose and local runs.
