@@ -24,12 +24,31 @@ function fromHost(host: string, secure: "https" | "wss"): string {
   return `${secure}://${fqdn}`;
 }
 
+function cleanOrigin(raw: string | undefined): string | null {
+  if (!raw) return null;
+  let s = raw.trim();
+  s = s.replace(/\/+$/, "");
+  s = s.replace(/\/api\/v1$/i, "");
+  return s || null;
+}
+
+function cleanWsOrigin(raw: string | undefined): string | null {
+  if (!raw) return null;
+  let s = raw.trim();
+  s = s.replace(/\/+$/, "");
+  s = s.replace(/\/ws\/fleet$/i, "");
+  return s || null;
+}
+
+const rawApiBase = cleanOrigin(import.meta.env.VITE_API_BASE_URL);
+const rawWsBase = cleanWsOrigin(import.meta.env.VITE_WS_BASE_URL || import.meta.env.VITE_WS_URL);
+
 const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
+  rawApiBase ||
   (apiHost ? fromHost(apiHost, "https") : "http://localhost:8000");
 
 export const WS_BASE =
-  import.meta.env.VITE_WS_BASE_URL ||
+  rawWsBase ||
   (apiHost ? fromHost(apiHost, "wss") : "ws://localhost:8000");
 
 export const API_V1 = `${API_BASE}/api/v1`;
