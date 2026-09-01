@@ -15,7 +15,7 @@
 # when a name is already taken globally). Nothing here needs hand-editing.
 
 databases:
-  - name: routeos-db
+  - name: routepilot-db
     plan: free
     postgresMajorVersion: "16"
     # PostGIS is enabled by the first Alembic migration (CREATE EXTENSION postgis).
@@ -23,13 +23,13 @@ databases:
 services:
   # --- Redis / Key Value ---
   - type: keyvalue
-    name: routeos-redis
+    name: routepilot-redis
     plan: free
     ipAllowList: []   # only reachable from Render services
 
   # --- Backend API (FastAPI, Docker) ---
   - type: web
-    name: routeos-backend
+    name: routepilot-backend
     runtime: docker
     plan: free
     dockerfilePath: ./backend/Dockerfile
@@ -38,12 +38,12 @@ services:
     envVars:
       - key: DATABASE_URL          # standard postgres URL; the app coerces the driver
         fromDatabase:
-          name: routeos-db
+          name: routepilot-db
           property: connectionString
       - key: REDIS_URL
         fromService:
           type: keyvalue
-          name: routeos-redis
+          name: routepilot-redis
           property: connectionString
       - key: SECRET_KEY
         generateValue: true        # Render generates a strong secret
@@ -73,7 +73,7 @@ services:
 
   # --- Frontend (Vite SPA as a free static site) ---
   - type: web
-    name: routeos-frontend
+    name: routepilot-frontend
     runtime: static
     rootDir: frontend
     buildCommand: npm ci && npm run build
@@ -81,14 +81,14 @@ services:
     envVars:
       - key: VITE_API_HOST
         # NOTE: this resolves to the backend's *service name* (e.g.
-        # "routeos-backend-h5x6"), which is Render's internal DNS name — not a
+        # "routepilot-backend-h5x6"), which is Render's internal DNS name — not a
         # public FQDN. The client expands a dot-less value to
         # <name>.onrender.com to get the browser-reachable origin, and derives
         # https:// and wss:// from it (see src/api/client.ts). That is what
         # keeps this blueprint working whatever suffix Render assigns.
         fromService:
           type: web
-          name: routeos-backend
+          name: routepilot-backend
           property: host
     routes:
       - type: rewrite       # SPA fallback: all client routes -> index.html
