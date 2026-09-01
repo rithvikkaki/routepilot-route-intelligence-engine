@@ -1,0 +1,96 @@
+# RoutePilot — Render Blueprint (free tier) for a public live demo.
+#
+# Deploy: push this repo to GitHub, then on https://render.com →
+#   New → Blueprint → pick this repo → Apply. Render reads this file and
+#   provisions everything below.
+#
+# Services: managed Postgres (PostGIS), Key Value (Redis), backend (Docker),
+# frontend (static site).
+#
+# Free web services sleep after ~15 min idle and cold-start in ~50s — fine for
+# a portfolio demo, not for production traffic.
+#
+# Every cross-service URL is wired with `fromService`, so this blueprint works
+# unchanged even when Render appends a suffix to a service name (which it does
+# when a name is already taken globally). Nothing here needs hand-editing.
+
+databases:
+  - name: routeos-db
+    plan: free
+    postgresMajorVersion: "16"
+    # PostGIS is enabled by the first Alembic migration (CREATE EXTENSION postgis).
+
+services:
+  # --- Redis / Key Value ---
+  - type: keyvalue
+    name: routeos-redis
+    plan: free
+    ipAllowList: []   # only reachable from Render services
+
+  # --- Backend API (FastAPI, Docker) ---
+  - type: web
+    name: routeos-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL          # standard postgres URL; the app coerces the driver
+        fromDatabase:
+          name: routeos-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: routeos-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true        # Render generates a strong secret
+      - key: BACKEND_CORS_ORIGIN_REGEX
+        # The frontend already references this service, so this side CANNOT
+        # reference the frontend back — Render rejects circular blueprint
+        # dependencies. Match the deployed frontend by pattern instead; this
+        # stays correct whatever suffix Render assigns to the service name.
+        value: ^https://[a-z0-9-]+\.onrender\.com$
+      - key: ENVIRONMENT
+        value: production
+      - key: METRICS_PUBLIC
+        # Keep the Prometheus endpoint behind admin auth in production.
+        value: "false"
+      - key: SOLVER_ASYNC_TIME_LIMIT_SECONDS
+        # Background solves are not bound to an HTTP request, so the budget can
+        # be minutes. This is what lets a fraction-of-a-CPU instance still reach
+        # a plan that beats the greedy baseline.
+        value: "240"
+      - key: SOLVER_TIME_LIMIT_SECONDS
+        # Free instances get a small fraction of a CPU, so the default 15s buys
+        # far fewer guided-local-search iterations than the same budget does on
+        # a dev machine — enough that the solver was returning near-first-
+        # solution plans that lost to the naive baseline. The budget is
+        # wall-clock, so a larger value restores solution quality here.
+        value: "60"
+
+  # --- Frontend (Vite SPA as a free static site) ---
+  - type: web
+    name: routeos-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_HOST
+        # NOTE: this resolves to the backend's *service name* (e.g.
+        # "routeos-backend-h5x6"), which is Render's internal DNS name — not a
+        # public FQDN. The client expands a dot-less value to
+        # <name>.onrender.com to get the browser-reachable origin, and derives
+        # https:// and wss:// from it (see src/api/client.ts). That is what
+        # keeps this blueprint working whatever suffix Render assigns.
+        fromService:
+          type: web
+          name: routeos-backend
+          property: host
+    routes:
+      - type: rewrite       # SPA fallback: all client routes -> index.html
+        source: /*
+        destination: /index.html
