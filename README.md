@@ -19,7 +19,7 @@ re-optimization built in.
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-### [▶ Live Demo](https://routeos-frontend.onrender.com) · [API Docs](https://routeos-backend-h5x6.onrender.com/docs) · [Health](https://routeos-backend-h5x6.onrender.com/health)
+### [▶ Live Demo](https://routepilot-frontend.onrender.com) · [API Docs](https://routepilot-backend-cpdd.onrender.com/docs) · [Health](https://routepilot-backend-cpdd.onrender.com/health)
 
 Sign in as **`dispatcher@routepilot.dev`** / **`dispatch12345`** (one-click on the login screen).
 
@@ -75,8 +75,8 @@ The only prerequisite is [Docker Desktop](https://www.docker.com/products/docker
 No local Python, Node, or database needed.
 
 ```bash
-git clone https://github.com/dhanoliya-ji/RoutePilot.git
-cd RoutePilot
+git clone https://github.com/rithvikkaki/routepilot-route-intelligence-engine.git
+cd routepilot-route-intelligence-engine
 cp .env.example .env          # Windows PowerShell: copy .env.example .env
 docker compose up --build
 ```
@@ -126,44 +126,40 @@ The login screen has one-click sign-in for each. **Start with Dispatcher.**
 
 ## 📸 Screenshots
 
-### Route Planner — optimization result vs naive baseline
-Selected orders and fleet on the left, solved routes on the map, measured savings on the right.
-Here: **3 routes instead of 5 vehicles (−40%)** and **395.92 km vs 486.06 km (−18.5%)** — while
-serving all 50 orders. Note the honestly-reported **−17.2% on time**: consolidating onto fewer
-vehicles makes each route longer in duration. The solver shows the tradeoff instead of hiding it.
+### 💻 Laptop & Desktop Experience
 
+#### Route Planner — Optimization Result vs Naive Baseline
+Selected orders and fleet on the left, solved multi-vehicle routes on the interactive geospatial map, and measured efficiency savings on the right.
 ![Route Planner](docs/screenshots/03b-route-planner-solved.png)
 
-### Live Operations — real-time fleet tracking
-Six active routes streaming over a WebSocket, live vehicle markers, per-route stop progress,
-and a delivery event feed. Traffic injection and re-optimization are driven from this screen.
-
+#### Live Operations — Real-Time Fleet Tracking & Telemetry
+Active vehicle dispatch streaming over WebSockets, real-time vehicle markers, per-route stop progress, and live delivery telemetry event feed.
 ![Live Operations](docs/screenshots/02-live-ops.png)
 
-### Operations Dashboard
-KPIs and charts aggregated in SQL and cached in Redis.
-
+#### Operations Dashboard
+Live dispatch KPIs, operational health alerts, fleet status matrix, and daily delivery performance charts.
 ![Dashboard](docs/screenshots/01-dashboard.png)
 
-### Analytics — optimization impact over time
-Per-run improvement, distance savings, fleet utilisation, and distance by vehicle.
+#### Logistics Analytics & Optimization Audit Log
 
-![Analytics](docs/screenshots/05-analytics.png)
-
-### Optimization Log — every solver run, audited
-Objective, order counts, before → after distance, measured improvement, and solve time.
-
-![Optimization Log](docs/screenshots/08-optimization-log.png)
-
-### Routes, Orders & Fleet
-
-| Routes | Orders |
+| Logistics Analytics | Optimization Solver Audit |
 |---|---|
-| ![Routes](docs/screenshots/04-active-routes.png) | ![Orders](docs/screenshots/06-orders.png) |
+| ![Analytics](docs/screenshots/05-analytics.png) | ![Optimization Log](docs/screenshots/08-optimization-log.png) |
 
-| Fleet | Depots |
-|---|---|
-| ![Fleet](docs/screenshots/07-fleet.png) | ![Depots](docs/screenshots/09-depots.png) |
+#### Fleet, Depots & Orders Management
+
+| Pan-India Depots | Active Fleet | Delivery Orders |
+|---|---|---|
+| ![Depots](docs/screenshots/09-depots.png) | ![Fleet](docs/screenshots/07-fleet.png) | ![Orders](docs/screenshots/06-orders.png) |
+
+---
+
+### 📱 Mobile Experience (Fully Responsive)
+RoutePilot seamlessly adapts to mobile screens (< 768px) with bottom quick-navigation, sliding drawer, segmented tab switchers, and touch-friendly controls.
+
+| Mobile Dashboard | Mobile Live Ops | Mobile Route Planner |
+|---|---|---|
+| ![Mobile Dashboard](docs/screenshots/10-mobile-dashboard.png) | ![Mobile Live Ops](docs/screenshots/11-mobile-liveops.png) | ![Mobile Planner](docs/screenshots/12-mobile-planner.png) |
 
 ---
 
