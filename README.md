@@ -85,12 +85,12 @@ The backend waits for Postgres, applies migrations, enables PostGIS, and seeds d
 (11 depots including the Guntur/AP Central primary hub + 10 regional hubs, 48 vehicles, ~170 Pan-India orders). When you see
 `Application startup complete`:
 
-| Service | URL |
-|---|---|
-| **Web application** | http://localhost:5173 |
-| API docs (Swagger) | http://localhost:8000/docs |
-| Health check | http://localhost:8000/health |
-| Metrics (Prometheus) | http://localhost:8000/metrics |
+| Service | Live Cloud (Production) | Local Docker |
+|---|---|---|
+| **Web application** | [routepilot-frontend.onrender.com](https://routepilot-frontend.onrender.com) | http://localhost:5173 |
+| **API docs (Swagger)** | [routepilot-backend-cpdd.onrender.com/docs](https://routepilot-backend-cpdd.onrender.com/docs) | http://localhost:8000/docs |
+| **Health check** | [routepilot-backend-cpdd.onrender.com/health](https://routepilot-backend-cpdd.onrender.com/health) | http://localhost:8000/health |
+| **Metrics (Prometheus)** | [routepilot-backend-cpdd.onrender.com/metrics](https://routepilot-backend-cpdd.onrender.com/metrics) | http://localhost:8000/metrics |
 
 ### Demo accounts
 
@@ -155,11 +155,11 @@ Live dispatch KPIs, operational health alerts, fleet status matrix, and daily de
 ---
 
 ### 📱 Mobile Experience (Fully Responsive)
-RoutePilot seamlessly adapts to mobile screens (< 768px) with bottom quick-navigation, sliding drawer, segmented tab switchers, and touch-friendly controls.
+RoutePilot is engineered with dual laptop & mobile responsive architecture (< 768px), featuring bottom quick-navigation, a slide-over drawer, segmented tab switchers, and touch-optimized controls.
 
-| Mobile Dashboard | Mobile Live Ops | Mobile Route Planner |
-|---|---|---|
-| ![Mobile Dashboard](docs/screenshots/10-mobile-dashboard.png) | ![Mobile Live Ops](docs/screenshots/11-mobile-liveops.png) | ![Mobile Planner](docs/screenshots/12-mobile-planner.png) |
+| Operations Dashboard | Live Map & Telemetry | Route Planner & Orders | Navigation Drawer |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/screenshots/10-mobile-dashboard.png" width="220" /> | <img src="docs/screenshots/11-mobile-liveops.png" width="220" /> | <img src="docs/screenshots/12-mobile-planner.png" width="220" /> | <img src="docs/screenshots/13-mobile-drawer.png" width="220" /> |
 
 ---
 
