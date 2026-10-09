@@ -36,12 +36,28 @@ def _to_async_url(url: str) -> str:
 
 def _to_sync_url(url: str) -> str:
     """Derive the psycopg (sync) URL used by Alembic from any postgres URL."""
+    from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
     if url.startswith("postgres://"):
         url = "postgresql://" + url[len("postgres://"):]
     for prefix in ("postgresql+asyncpg://", "postgresql+psycopg://", "postgresql://"):
         if url.startswith(prefix):
-            return "postgresql+psycopg://" + url[len(prefix):]
-    return url
+            url = "postgresql+psycopg://" + url[len(prefix):]
+            break
+
+    parsed = urlparse(url)
+    qs = parse_qs(parsed.query)
+
+    # psycopg accepts sslmode, but rejects asyncpg's ssl and Neon's channel_binding
+    ssl = qs.pop("ssl", None)
+    qs.pop("channel_binding", None)
+    if ssl and "sslmode" not in qs:
+        mode = ssl[0]
+        if mode in ("require", "true", "1"):
+            qs["sslmode"] = ["require"]
+
+    new_query = urlencode(qs, doseq=True)
+    return urlunparse(parsed._replace(query=new_query))
 
 
 class Settings(BaseSettings):
@@ -139,9 +155,9 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def _validate_and_normalize(self) -> "Settings":
         # Accept a single standard DATABASE_URL (as managed hosts like Render/Railway
-        # provide) and derive both the async (app) and sync (Alembic) driver URLs.
-        self.database_url = _to_async_url(self.database_url)
-        self.database_url_sync = _to_sync_url(self.database_url)
+        raw_db_url = self.database_url
+        self.database_url = _to_async_url(raw_db_url)
+        self.database_url_sync = _to_sync_url(raw_db_url)
 
         # Enforce strong secret key in production
         if self.environment.lower() == "production":
