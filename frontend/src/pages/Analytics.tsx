@@ -62,7 +62,7 @@ export default function Analytics() {
       
       <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6 p-3 sm:p-6">
         {/* KPI Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:flex lg:flex-wrap gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:flex md:flex-wrap gap-2.5 sm:gap-3">
           {!s ? (
             Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="h-16 flex-1 min-w-[120px]" />)
           ) : (
@@ -80,10 +80,10 @@ export default function Analytics() {
         </div>
 
         {/* Sections Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           
           {/* Order & Delivery Performance */}
-          <div className="card p-4 lg:col-span-2">
+          <div className="card p-4 md:col-span-2">
             <div className="mb-3 flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-semibold text-ink-950">Deliveries Over Time</h3>

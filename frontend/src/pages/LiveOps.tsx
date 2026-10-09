@@ -480,8 +480,8 @@ export default function LiveOps() {
         </div>
       )}
 
-      {/* Mobile Tab Switcher (lg:hidden) */}
-      <div className="flex border-b border-ink-200 bg-white p-1.5 lg:hidden shrink-0 shadow-2xs">
+      {/* Mobile Tab Switcher (md:hidden) */}
+      <div className="flex border-b border-ink-200 bg-white p-1.5 md:hidden shrink-0 shadow-2xs">
         <button
           type="button"
           onClick={() => setMobileTab("map")}
@@ -507,10 +507,10 @@ export default function LiveOps() {
       </div>
 
       {/* ===================== WORKSPACE (Mobile tabbed, Desktop 12-col) ===================== */}
-      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-12 overflow-hidden">
+      <div className="flex flex-1 flex-col md:grid md:grid-cols-12 overflow-hidden">
         {/* MAP: 8 cols on desktop, full-width on mobile */}
-        <div className={`lg:col-span-8 relative bg-slate-100 ${
-          mobileTab === "map" ? "flex flex-1 w-full min-h-[420px] h-full" : "hidden lg:block"
+        <div className={`md:col-span-8 relative bg-slate-100 ${
+          mobileTab === "map" ? "flex flex-1 w-full min-h-[420px] h-full" : "hidden md:block"
         }`}>
           <MapContainer center={DEFAULT_CENTER} zoom={11} className="h-full w-full">
             <TileLayer
@@ -628,8 +628,8 @@ export default function LiveOps() {
         </div>
 
         {/* ===================== RIGHT PANEL: 4 cols on desktop ===================== */}
-        <div className={`lg:col-span-4 flex flex-col overflow-hidden border-l border-ink-200 bg-white ${
-          mobileTab === "panel" ? "flex flex-1 w-full" : "hidden lg:flex"
+        <div className={`md:col-span-4 flex flex-col overflow-hidden border-l border-ink-200 bg-white ${
+          mobileTab === "panel" ? "flex flex-1 w-full" : "hidden md:flex"
         }`}>
           {/* --- ACTIVE ROUTES LIST --- */}
           <div className="border-b border-ink-200 bg-white">

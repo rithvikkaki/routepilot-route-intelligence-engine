@@ -30,9 +30,9 @@ export function Layout() {
   const currentTitle = activeNav?.label ?? "RoutePilot";
 
   return (
-    <div className="flex h-screen flex-col lg:flex-row overflow-hidden bg-ink-50">
-      {/* ── MOBILE TOP BAR (lg:hidden) ─────────────────────────── */}
-      <header className="flex h-14 items-center justify-between border-b border-ink-200 bg-white px-4 lg:hidden z-30 shadow-xs shrink-0">
+    <div className="flex h-screen flex-col md:flex-row overflow-hidden bg-ink-50">
+      {/* ── MOBILE TOP BAR (md:hidden) ─────────────────────────── */}
+      <header className="flex h-14 items-center justify-between border-b border-ink-200 bg-white px-4 md:hidden z-30 shadow-xs shrink-0">
         <div className="flex items-center gap-2.5">
           <button
             type="button"
@@ -67,14 +67,14 @@ export function Layout() {
       {/* ── MOBILE BACKDROP OVERLAY ──────────────────────────── */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs md:hidden transition-opacity"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      {/* ── MOBILE SLIDE-OVER DRAWER (lg:hidden) ─────────────── */}
+      {/* ── MOBILE SLIDE-OVER DRAWER (md:hidden) ─────────────── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-white border-r border-ink-200 shadow-2xl transition-transform duration-250 ease-in-out lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-white border-r border-ink-200 shadow-2xl transition-transform duration-250 ease-in-out md:hidden ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -134,8 +134,8 @@ export function Layout() {
         </div>
       </aside>
 
-      {/* ── DESKTOP SIDEBAR (hidden on mobile, visible lg:flex) ── */}
-      <aside className="hidden lg:flex lg:w-60 lg:flex-col border-r border-ink-200 bg-white shrink-0">
+      {/* ── DESKTOP SIDEBAR (hidden on mobile, visible md:flex) ── */}
+      <aside className="hidden md:flex md:w-56 lg:w-60 md:flex-col border-r border-ink-200 bg-white shrink-0">
         <div className="flex items-center gap-2 px-5 py-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white shadow-xs">
             R
@@ -174,12 +174,12 @@ export function Layout() {
       </aside>
 
       {/* ── MAIN CONTENT AREA ──────────────────────────────────── */}
-      <main className="flex-1 overflow-y-auto bg-ink-50 pb-16 lg:pb-0">
+      <main className="flex-1 overflow-y-auto bg-ink-50 pb-16 md:pb-0">
         <Outlet />
       </main>
 
-      {/* ── MOBILE BOTTOM NAVIGATION BAR (lg:hidden) ───────────── */}
-      <nav className="fixed bottom-0 inset-x-0 z-30 flex h-14 items-center justify-around border-t border-ink-200 bg-white/95 backdrop-blur-md px-2 lg:hidden shadow-lg">
+      {/* ── MOBILE BOTTOM NAVIGATION BAR (md:hidden) ───────────── */}
+      <nav className="fixed bottom-0 inset-x-0 z-30 flex h-14 items-center justify-around border-t border-ink-200 bg-white/95 backdrop-blur-md px-2 md:hidden shadow-lg">
         {BOTTOM_NAV.map((b) => (
           <NavLink
             key={b.to}

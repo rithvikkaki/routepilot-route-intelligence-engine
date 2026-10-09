@@ -120,7 +120,7 @@ export default function Depots() {
         </div>
       </div>
 
-      <div className="flex-1 grid grid-cols-1 gap-4 sm:gap-6 p-3 sm:p-6 lg:grid-cols-2 overflow-y-auto">
+      <div className="flex-1 grid grid-cols-1 gap-4 sm:gap-6 p-3 sm:p-6 md:grid-cols-2 overflow-y-auto">
         {/* Left Side: Depot List & Map */}
         <div className="flex flex-col gap-4 min-h-[350px] sm:min-h-[500px]">
           <div className="flex items-center gap-2">

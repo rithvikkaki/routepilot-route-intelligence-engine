@@ -167,7 +167,7 @@ export default function Dashboard() {
       <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6 p-3 sm:p-6">
         
         {/* KPI Strip */}
-        <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-5">
           {summary.isLoading || !s ? (
             Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-20" />)
           ) : (
@@ -227,7 +227,7 @@ export default function Dashboard() {
         </div>
 
         {/* Fleet & Active Route Overview */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           
           {/* Fleet Status Breakdown */}
           <div className="card p-4 flex flex-col justify-between">
@@ -279,7 +279,7 @@ export default function Dashboard() {
           </div>
 
           {/* Active Routes Progress Panel */}
-          <div className="card p-4 lg:col-span-2 flex flex-col justify-between">
+          <div className="card p-4 md:col-span-2 flex flex-col justify-between">
             <div>
               <h3 className="text-sm font-semibold text-ink-950 uppercase tracking-wider">Active Route Monitor</h3>
               <p className="text-xs text-ink-500 mb-3">Live dispatch progress of vehicles currently on the road</p>
@@ -320,10 +320,10 @@ export default function Dashboard() {
         </div>
 
         {/* Analytics Charts & Solver Log */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           
           {/* Deliveries Over Time Line Chart */}
-          <div className="card p-4 lg:col-span-2">
+          <div className="card p-4 md:col-span-2">
             <div className="mb-3 flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-semibold text-ink-950 uppercase tracking-wider">Deliveries Performance</h3>

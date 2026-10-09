@@ -253,7 +253,7 @@ export default function Orders() {
       <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6 p-3 sm:p-6">
         
         {/* Compact Operational KPI Cards Row */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-3 md:grid-cols-5">
           <KpiCardCompact label="Total Orders" value={opsData.total_orders} icon="cube" color="slate" />
           <KpiCardCompact label="High Priority" value={opsData.high_priority_orders} icon="flame" color="red" />
           <KpiCardCompact label="Unassigned Orders" value={opsData.unassigned_orders} icon="clock" color="amber" />
