@@ -78,6 +78,12 @@ class TestDatabaseUrlNormalisation:
         assert s.database_url == "postgresql+asyncpg://u:p@host/db"
         assert s.database_url_sync == "postgresql+psycopg://u:p@host/db"
 
+    def test_neon_url_normalises_ssl_for_asyncpg(self):
+        neon_url = "postgresql://u:p@ep-odd-bird.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+        s = _settings(database_url=neon_url)
+        assert s.database_url == "postgresql+asyncpg://u:p@ep-odd-bird.aws.neon.tech/neondb?ssl=require"
+        assert s.database_url_sync.startswith("postgresql+psycopg://")
+
 
 class TestProductionSecretValidation:
     def test_production_rejects_insecure_default_secret(self):

@@ -9,11 +9,29 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 def _to_async_url(url: str) -> str:
     """Coerce a plain postgres URL (e.g. what managed hosts hand out) to asyncpg."""
+    from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
     if url.startswith("postgres://"):
         url = "postgresql://" + url[len("postgres://"):]
     if url.startswith("postgresql://"):
         url = "postgresql+asyncpg://" + url[len("postgresql://"):]
-    return url
+
+    parsed = urlparse(url)
+    qs = parse_qs(parsed.query)
+
+    # asyncpg does not accept sslmode or channel_binding; it expects ssl=require/prefer/etc.
+    sslmode = qs.pop("sslmode", None)
+    qs.pop("channel_binding", None)
+
+    if sslmode:
+        mode = sslmode[0]
+        if mode in ("require", "verify-ca", "verify-full"):
+            qs["ssl"] = ["require"]
+        elif mode in ("disable", "allow"):
+            qs["ssl"] = ["disable"]
+
+    new_query = urlencode(qs, doseq=True)
+    return urlunparse(parsed._replace(query=new_query))
 
 
 def _to_sync_url(url: str) -> str:

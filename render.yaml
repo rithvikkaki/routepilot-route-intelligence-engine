@@ -14,11 +14,8 @@
 # unchanged even when Render appends a suffix to a service name (which it does
 # when a name is already taken globally). Nothing here needs hand-editing.
 
-databases:
-  - name: routepilot-db
-    plan: free
-    postgresMajorVersion: "16"
-    # PostGIS is enabled by the first Alembic migration (CREATE EXTENSION postgis).
+# Neon Free PostgreSQL is used for permanent $0/month storage (no 30-day expiry).
+# DATABASE_URL is set in the Render Dashboard Environment tab.
 
 services:
   # --- Redis / Key Value ---
@@ -36,10 +33,8 @@ services:
     dockerContext: ./backend
     healthCheckPath: /health
     envVars:
-      - key: DATABASE_URL          # standard postgres URL; the app coerces the driver
-        fromDatabase:
-          name: routepilot-db
-          property: connectionString
+      - key: DATABASE_URL          # Set in Render dashboard to Neon Postgres connection string
+        sync: false
       - key: REDIS_URL
         fromService:
           type: keyvalue
