@@ -101,28 +101,28 @@ export default function Depots() {
       />
 
       {/* KPI summary strip */}
-      <div className="border-b border-ink-200 bg-ink-50 px-6 py-4 flex flex-wrap gap-4 items-center">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
-          <span className="text-xl font-bold tabular-nums text-ink-900">{totalDepots}</span>
-          <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Total Depots</span>
+      <div className="border-b border-ink-200 bg-ink-50 px-4 sm:px-6 py-3 sm:py-4 grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-4 items-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-ink-900">{totalDepots}</span>
+          <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Total Depots</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
-          <span className="text-xl font-bold tabular-nums text-ink-900">{totalVehicles}</span>
-          <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Fleet Vehicles</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-ink-900">{totalVehicles}</span>
+          <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Fleet Vehicles</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
-          <span className="text-xl font-bold tabular-nums text-emerald-600">{totalAvailableVehicles}</span>
-          <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Available Fleet</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-emerald-600">{totalAvailableVehicles}</span>
+          <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Available Fleet</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
-          <span className="text-xl font-bold tabular-nums text-amber-600">{totalInTransitVehicles}</span>
-          <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">In Transit Fleet</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-amber-600">{totalInTransitVehicles}</span>
+          <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">In Transit Fleet</span>
         </div>
       </div>
 
-      <div className="flex-1 grid grid-cols-1 gap-6 p-6 lg:grid-cols-2 overflow-y-auto">
+      <div className="flex-1 grid grid-cols-1 gap-4 sm:gap-6 p-3 sm:p-6 lg:grid-cols-2 overflow-y-auto">
         {/* Left Side: Depot List & Map */}
-        <div className="flex flex-col gap-4 min-h-[500px]">
+        <div className="flex flex-col gap-4 min-h-[350px] sm:min-h-[500px]">
           <div className="flex items-center gap-2">
             <input
               className="input text-xs py-1.5 px-3 flex-1"

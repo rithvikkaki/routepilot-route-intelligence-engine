@@ -116,7 +116,7 @@ export default function ActiveRoutes() {
       />
 
       {/* KPI stats bar */}
-      <div className="border-b border-ink-200 bg-ink-50 px-6 py-4">
+      <div className="border-b border-ink-200 bg-ink-50 px-4 sm:px-6 py-3 sm:py-4">
         {routesQuery.isLoading ? (
           <div className="flex gap-3">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -124,28 +124,28 @@ export default function ActiveRoutes() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-wrap gap-3 items-center">
-            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px]">
-              <span className="text-xl font-bold tabular-nums text-ink-900">{filtered.length}</span>
-              <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Filtered Routes</span>
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-3 items-center">
+            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+              <span className="text-lg sm:text-xl font-bold tabular-nums text-ink-900">{filtered.length}</span>
+              <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Filtered Routes</span>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px]">
-              <span className="text-xl font-bold tabular-nums text-blue-600">{kpis.active}</span>
-              <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Active</span>
+            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+              <span className="text-lg sm:text-xl font-bold tabular-nums text-blue-600">{kpis.active}</span>
+              <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Active</span>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px]">
-              <span className="text-xl font-bold tabular-nums text-emerald-600">{kpis.completed}</span>
-              <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Completed</span>
+            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+              <span className="text-lg sm:text-xl font-bold tabular-nums text-emerald-600">{kpis.completed}</span>
+              <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Completed</span>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px]">
-              <span className="text-xl font-bold tabular-nums text-indigo-600">{kpis.activeVehicles}</span>
-              <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Active Fleet</span>
+            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+              <span className="text-lg sm:text-xl font-bold tabular-nums text-indigo-600">{kpis.activeVehicles}</span>
+              <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Active Fleet</span>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
-              <span className="text-sm font-bold tabular-nums text-ink-900">
+            <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs">
+              <span className="text-xs sm:text-sm font-bold tabular-nums text-ink-900">
                 {kpis.completedStops} / {kpis.totalStops}
               </span>
-              <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-ink-500">Completed Stops</span>
+              <span className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-ink-500">Completed Stops</span>
               {kpis.totalStops > 0 && (
                 <div className="mt-1 h-1 w-full rounded-full bg-ink-100 overflow-hidden">
                   <div
@@ -155,7 +155,7 @@ export default function ActiveRoutes() {
                 </div>
               )}
             </div>
-            <div className="ml-auto flex flex-col items-end justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[120px]">
+            <div className="w-full sm:w-auto sm:ml-auto flex flex-col items-start sm:items-end justify-center rounded-lg border border-ink-200 bg-white px-4 sm:px-5 py-2.5 sm:py-3 shadow-xs">
               <span className="text-sm font-bold tabular-nums text-ink-900">
                 {kpis.totalDistance.toFixed(0)} km
               </span>
@@ -166,13 +166,13 @@ export default function ActiveRoutes() {
       </div>
 
       {/* Filters strip */}
-      <div className="border-b border-ink-200 bg-white px-6 py-3 flex flex-wrap gap-3 items-center">
-        <div className="flex items-center gap-1.5 border-r border-ink-200 pr-3">
+      <div className="border-b border-ink-200 bg-white px-4 sm:px-6 py-2.5 sm:py-3 flex flex-wrap gap-2.5 sm:gap-3 items-center">
+        <div className="flex items-center gap-1 sm:gap-1.5 sm:border-r sm:border-ink-200 sm:pr-3 overflow-x-auto whitespace-nowrap scrollbar-none w-full sm:w-auto">
           {(["ALL", "PLANNED", "ACTIVE", "COMPLETED", "CANCELLED"] as const).map((st) => (
             <button
               key={st}
               onClick={() => setFilterStatus(st)}
-              className={`px-3 py-1 text-xs font-semibold rounded-md border transition-all ${
+              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md border transition-all ${
                 filterStatus === st
                   ? "bg-brand-500 border-brand-500 text-white shadow-xs"
                   : "bg-white border-ink-200 text-ink-600 hover:bg-ink-50"
@@ -183,12 +183,12 @@ export default function ActiveRoutes() {
           ))}
         </div>
 
-        <div className="relative">
+        <div className="relative w-full sm:w-auto flex-1 sm:flex-initial">
           <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-ink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
-            className="input pl-8 py-1.5 text-xs w-60"
+            className="input pl-8 py-1.5 text-xs w-full sm:w-60"
             placeholder="Search code, registration, driver..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -202,7 +202,7 @@ export default function ActiveRoutes() {
       </div>
 
       {/* Route List container */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4">
         {routesQuery.isLoading ? (
           <Skeleton className="h-64" />
         ) : routesQuery.isError ? (

@@ -150,13 +150,13 @@ export default function Fleet() {
 
       <div className="flex-1 overflow-y-auto">
         {/* ── FLEET SUMMARY STRIP ─────────────────────────────────────── */}
-        <div className="border-b border-ink-200 bg-ink-50 px-6 py-4">
+        <div className="border-b border-ink-200 bg-ink-50 px-4 sm:px-6 py-3 sm:py-4">
           {vehicles.isLoading ? (
             <div className="flex gap-3">
               {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-16 w-28 rounded-lg" />)}
             </div>
           ) : (
-            <div className="flex flex-wrap gap-3 items-center">
+            <div className="flex flex-wrap gap-2.5 sm:gap-3 items-center">
               <KpiChip label="Total" value={kpis.total} />
               <KpiChip label="Available" value={kpis.available} accent="text-emerald-600" />
               <KpiChip label="Assigned" value={kpis.assigned} accent="text-blue-600" />
@@ -168,7 +168,7 @@ export default function Fleet() {
                 <KpiChip label="Offline" value={kpis.offline} accent="text-slate-500" />
               )}
               {kpis.totalCapacity > 0 && (
-                <div className="ml-auto flex flex-col items-end justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[180px]">
+                <div className="w-full sm:w-auto sm:ml-auto flex flex-col items-start sm:items-end justify-center rounded-lg border border-ink-200 bg-white px-4 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[180px]">
                   <span className="text-sm font-bold text-ink-900">
                     {kpis.totalLoad.toFixed(0)} / {kpis.totalCapacity.toFixed(0)} kg
                   </span>
@@ -188,14 +188,14 @@ export default function Fleet() {
         </div>
 
         {/* ── FILTERS ─────────────────────────────────────────────────── */}
-        <div className="border-b border-ink-200 bg-white px-6 py-3 flex flex-wrap gap-3 items-center">
+        <div className="border-b border-ink-200 bg-white px-4 sm:px-6 py-2.5 sm:py-3 flex flex-wrap gap-2.5 sm:gap-3 items-center">
           {/* Search */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-ink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
-              className="input pl-8 py-1.5 text-xs w-52"
+              className="input pl-8 py-1.5 text-xs w-full sm:w-52"
               placeholder="Search registration or driver…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -255,7 +255,7 @@ export default function Fleet() {
         </div>
 
         {/* ── VEHICLE CARDS ────────────────────────────────────────────── */}
-        <div className="p-6">
+        <div className="p-3 sm:p-6">
           {vehicles.isLoading ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-44 w-full rounded-xl" />)}

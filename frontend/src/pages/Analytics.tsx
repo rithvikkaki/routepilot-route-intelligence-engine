@@ -60,9 +60,9 @@ export default function Analytics() {
     <div className="flex flex-col h-full">
       <PageHeader title="Logistics & Route Analytics" subtitle="Fleet performance, delivery metrics, and optimization intelligence" />
       
-      <div className="flex-1 overflow-y-auto space-y-6 p-6">
+      <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6 p-3 sm:p-6">
         {/* KPI Strip */}
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:flex lg:flex-wrap gap-2.5 sm:gap-3">
           {!s ? (
             Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="h-16 flex-1 min-w-[120px]" />)
           ) : (

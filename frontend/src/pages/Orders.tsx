@@ -250,10 +250,10 @@ export default function Orders() {
         }
       />
 
-      <div className="flex-1 overflow-y-auto space-y-6 p-6">
+      <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6 p-3 sm:p-6">
         
         {/* Compact Operational KPI Cards Row */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-3 lg:grid-cols-5">
           <KpiCardCompact label="Total Orders" value={opsData.total_orders} icon="cube" color="slate" />
           <KpiCardCompact label="High Priority" value={opsData.high_priority_orders} icon="flame" color="red" />
           <KpiCardCompact label="Unassigned Orders" value={opsData.unassigned_orders} icon="clock" color="amber" />
@@ -262,11 +262,11 @@ export default function Orders() {
         </div>
 
         {/* Advanced Filters Block */}
-        <div className="flex flex-wrap gap-4 items-center justify-between card p-4">
-          <div className="flex flex-wrap gap-3 items-center flex-1">
+        <div className="flex flex-wrap gap-3 sm:gap-4 items-center justify-between card p-3 sm:p-4">
+          <div className="flex flex-wrap gap-2.5 sm:gap-3 items-center flex-1 w-full sm:w-auto">
             
             {/* Search Input */}
-            <div className="relative min-w-[200px] flex-1 max-w-sm">
+            <div className="relative w-full sm:w-auto sm:min-w-[200px] sm:flex-1 sm:max-w-sm">
               <svg className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>

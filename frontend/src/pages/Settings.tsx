@@ -72,7 +72,7 @@ export default function Settings() {
     <div className="flex flex-col h-full bg-slate-50/50">
       <PageHeader title="Profile & Settings" subtitle="Account configuration, role capabilities, and developer API credentials" />
       
-      <div className="flex-1 overflow-y-auto p-6 max-w-5xl mx-auto w-full space-y-6">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-6 max-w-5xl mx-auto w-full space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Left Column: Account Profile Summary */}

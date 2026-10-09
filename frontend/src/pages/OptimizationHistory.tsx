@@ -61,31 +61,31 @@ export default function OptimizationHistory() {
       <PageHeader title="Optimization Log & Solver Audit" subtitle="Audit solver runs, performance metrics, and routing improvement logs" />
 
       {/* KPI strip */}
-      <div className="border-b border-ink-200 bg-ink-50 px-6 py-4 flex flex-wrap gap-4 items-center">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px] flex-1">
-          <span className="text-xl font-bold tabular-nums text-ink-900">{kpis.total}</span>
+      <div className="border-b border-ink-200 bg-ink-50 px-4 sm:px-6 py-3 sm:py-4 grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-2.5 sm:gap-4 items-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[100px] flex-1">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-ink-900">{kpis.total}</span>
           <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">Total Runs</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px] flex-1">
-          <span className="text-xl font-bold tabular-nums text-emerald-600">{kpis.completed}</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[100px] flex-1">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-emerald-600">{kpis.completed}</span>
           <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">Success</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px] flex-1">
-          <span className="text-xl font-bold tabular-nums text-red-600">{kpis.failed}</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[100px] flex-1">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-red-600">{kpis.failed}</span>
           <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">Failed</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px] flex-1">
-          <span className="text-xl font-bold tabular-nums text-brand-600">{kpis.avgExecTime} ms</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[100px] flex-1">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-brand-600">{kpis.avgExecTime} ms</span>
           <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">Avg Solve Time</span>
         </div>
-        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-5 py-3 shadow-xs min-w-[100px] flex-1">
-          <span className="text-xl font-bold tabular-nums text-green-600">+{kpis.avgImprovement}%</span>
+        <div className="flex flex-col items-center justify-center rounded-lg border border-ink-200 bg-white px-3 sm:px-5 py-2.5 sm:py-3 shadow-xs min-w-[100px] flex-1 col-span-2 sm:col-span-1">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-green-600">+{kpis.avgImprovement}%</span>
           <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">Avg Distance Saved</span>
         </div>
       </div>
 
       {/* Filter strip */}
-      <div className="border-b border-ink-200 bg-white px-6 py-3 flex flex-wrap gap-3 items-center">
+      <div className="border-b border-ink-200 bg-white px-4 sm:px-6 py-2.5 sm:py-3 flex flex-wrap gap-2.5 sm:gap-3 items-center">
         {/* Status Filter */}
         <select
           className="input py-1.5 text-xs"
@@ -145,7 +145,7 @@ export default function OptimizationHistory() {
       </div>
 
       {/* Main List */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-6">
         {runsQuery.isLoading ? (
           <Skeleton className="h-64 w-full" />
         ) : runsQuery.isError ? (

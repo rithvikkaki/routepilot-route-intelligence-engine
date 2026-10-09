@@ -102,6 +102,7 @@ export default function LiveOps() {
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
+  const [mobileTab, setMobileTab] = useState<"map" | "panel">("map");
   const feedRef = useRef<FeedEntry[]>([]);
   const MAX_FEED = 60;
 
@@ -351,7 +352,7 @@ export default function LiveOps() {
         title="Live Operations"
         subtitle="Real-Time Fleet Intelligence & Simulation Console"
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {/* WS indicator */}
             <div className="flex items-center gap-1.5 rounded border border-ink-200 bg-white px-2.5 py-1 text-xs font-medium shadow-xs">
               <span
@@ -365,9 +366,9 @@ export default function LiveOps() {
             </div>
 
             {/* Speed selector */}
-            <label className="text-xs font-semibold text-ink-600">Speed:</label>
+            <label className="text-xs font-semibold text-ink-600 hidden sm:inline">Speed:</label>
             <select
-              className="input py-1 text-xs font-medium"
+              className="input py-1 text-xs font-medium w-auto"
               value={speed}
               onChange={(e) => handleSpeedChange(Number(e.target.value))}
             >
@@ -380,7 +381,7 @@ export default function LiveOps() {
             {/* Start / Stop */}
             {!isSimRunning ? (
               <button
-                className="btn-primary text-xs shadow-xs py-1.5 px-4"
+                className="btn-primary text-xs shadow-xs py-1.5 px-3 sm:px-4"
                 disabled={startMut.isPending}
                 onClick={() => startMut.mutate()}
               >
@@ -389,13 +390,13 @@ export default function LiveOps() {
             ) : (
               <>
                 <button
-                  className="btn-primary text-xs py-1.5 px-4 opacity-80 cursor-not-allowed"
+                  className="btn-primary text-xs py-1.5 px-3 sm:px-4 opacity-80 cursor-not-allowed"
                   disabled
                 >
                   ● Simulating {simSpeed}×
                 </button>
                 <button
-                  className="btn-secondary text-xs py-1.5 px-3 text-red-600 border-red-200 hover:bg-red-50"
+                  className="btn-secondary text-xs py-1.5 px-2.5 sm:px-3 text-red-600 border-red-200 hover:bg-red-50"
                   disabled={stopMut.isPending}
                   onClick={() => stopMut.mutate()}
                 >
@@ -408,7 +409,7 @@ export default function LiveOps() {
       />
 
       {/* ===================== LIVE KPI STRIP ===================== */}
-      <div className="flex items-center gap-0 border-b border-ink-200 bg-slate-900 px-6 py-1.5 text-xs">
+      <div className="flex items-center gap-0 border-b border-ink-200 bg-slate-900 px-4 sm:px-6 py-1.5 text-xs overflow-x-auto whitespace-nowrap scrollbar-none">
         <KpiChip
           label="Active Routes"
           value={routes.data?.length ?? ds?.active_routes ?? 0}
@@ -479,10 +480,38 @@ export default function LiveOps() {
         </div>
       )}
 
-      {/* ===================== 12-COL WORKSPACE ===================== */}
-      <div className="grid flex-1 grid-cols-12 overflow-hidden">
-        {/* MAP: 8 cols */}
-        <div className="col-span-8 relative bg-slate-100">
+      {/* Mobile Tab Switcher (lg:hidden) */}
+      <div className="flex border-b border-ink-200 bg-white p-1.5 lg:hidden shrink-0 shadow-2xs">
+        <button
+          type="button"
+          onClick={() => setMobileTab("map")}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors ${
+            mobileTab === "map"
+              ? "bg-brand-50 text-brand-700 shadow-2xs border border-brand-200"
+              : "text-ink-500 hover:text-ink-800"
+          }`}
+        >
+          🗺️ Live Map
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("panel")}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors ${
+            mobileTab === "panel"
+              ? "bg-brand-50 text-brand-700 shadow-2xs border border-brand-200"
+              : "text-ink-500 hover:text-ink-800"
+          }`}
+        >
+          🚛 Routes ({routes.data?.length ?? 0}) & Telemetry
+        </button>
+      </div>
+
+      {/* ===================== WORKSPACE (Mobile tabbed, Desktop 12-col) ===================== */}
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-12 overflow-hidden">
+        {/* MAP: 8 cols on desktop, full-width on mobile */}
+        <div className={`lg:col-span-8 relative bg-slate-100 ${
+          mobileTab === "map" ? "flex flex-1 w-full min-h-[420px] h-full" : "hidden lg:block"
+        }`}>
           <MapContainer center={DEFAULT_CENTER} zoom={11} className="h-full w-full">
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -598,8 +627,10 @@ export default function LiveOps() {
           </MapContainer>
         </div>
 
-        {/* ===================== RIGHT PANEL: 4 cols ===================== */}
-        <div className="col-span-4 flex flex-col overflow-hidden border-l border-ink-200 bg-white">
+        {/* ===================== RIGHT PANEL: 4 cols on desktop ===================== */}
+        <div className={`lg:col-span-4 flex flex-col overflow-hidden border-l border-ink-200 bg-white ${
+          mobileTab === "panel" ? "flex flex-1 w-full" : "hidden lg:flex"
+        }`}>
           {/* --- ACTIVE ROUTES LIST --- */}
           <div className="border-b border-ink-200 bg-white">
             <div className="flex items-center justify-between px-4 pt-3 pb-2">

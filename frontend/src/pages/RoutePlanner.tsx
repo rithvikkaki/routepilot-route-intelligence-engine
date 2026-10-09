@@ -28,6 +28,7 @@ export default function RoutePlanner() {
   const [acceptedSuccess, setAcceptedSuccess] = useState(false);
   const [expandedRouteId, setExpandedRouteId] = useState<number | null>(null);
   const [orderSearch, setOrderSearch] = useState("");
+  const [mobileTab, setMobileTab] = useState<"orders" | "map" | "results">("orders");
   const abortRef = useRef(false);
 
   useEffect(() => {
@@ -149,6 +150,7 @@ export default function RoutePlanner() {
     onSuccess: (r) => {
       setRun(r);
       setJobId(null);
+      setMobileTab("results");
       push(`Optimization complete in ${r.execution_time_ms} ms`, "success");
     },
     onError: (e: any) => {
@@ -275,8 +277,8 @@ export default function RoutePlanner() {
       />
 
       {/* Visual Workflow Stepper Bar */}
-      <div className="flex items-center justify-between border-b border-ink-200 bg-slate-900 px-6 py-2 text-white text-xs">
-        <div className="flex items-center gap-6">
+      <div className="flex items-center justify-between border-b border-ink-200 bg-slate-900 px-4 sm:px-6 py-2 text-white text-xs overflow-x-auto whitespace-nowrap scrollbar-none">
+        <div className="flex items-center gap-4 sm:gap-6 shrink-0">
           <StepperItem step={1} title="1. CONFIGURE" active={currentStep === 1} completed={currentStep > 1} />
           <span className="text-slate-600">➔</span>
           <StepperItem step={2} title="2. OPTIMIZE" active={currentStep === 2} completed={currentStep > 2} />
@@ -286,7 +288,7 @@ export default function RoutePlanner() {
           <StepperItem step={4} title="4. ACCEPT PLAN" active={currentStep === 4} completed={acceptedSuccess} />
         </div>
 
-        <div className="flex items-center gap-3 text-[11px] text-slate-300">
+        <div className="hidden md:flex items-center gap-3 text-[11px] text-slate-300 ml-4 shrink-0">
           <span>Depot: <strong className="text-white font-semibold">{depot?.name || "None"}</strong></span>
           <span className="text-slate-600">•</span>
           <span>Orders: <strong className="text-amber-400 font-semibold">{selOrders.size}</strong> selected</span>
@@ -295,17 +297,54 @@ export default function RoutePlanner() {
         </div>
       </div>
 
+      {/* Mobile Tab Switcher (lg:hidden) */}
+      <div className="flex border-b border-ink-200 bg-white p-1.5 lg:hidden shrink-0 shadow-2xs">
+        <button
+          type="button"
+          onClick={() => setMobileTab("orders")}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors ${
+            mobileTab === "orders"
+              ? "bg-brand-50 text-brand-700 shadow-2xs border border-brand-200"
+              : "text-ink-500 hover:text-ink-800"
+          }`}
+        >
+          📋 Orders ({selOrders.size})
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("map")}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors ${
+            mobileTab === "map"
+              ? "bg-brand-50 text-brand-700 shadow-2xs border border-brand-200"
+              : "text-ink-500 hover:text-ink-800"
+          }`}
+        >
+          🗺️ Route Map
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("results")}
+          className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors ${
+            mobileTab === "results"
+              ? "bg-brand-50 text-brand-700 shadow-2xs border border-brand-200"
+              : "text-ink-500 hover:text-ink-800"
+          }`}
+        >
+          ⚡ Results {payload ? `(${payload.routes.length})` : ""}
+        </button>
+      </div>
+
       {/* 1-Click Transition Banner after accepting plan */}
       {acceptedSuccess && (
-        <div className="flex items-center justify-between border-b border-emerald-300 bg-emerald-50 px-6 py-3 text-xs text-emerald-950 shadow-xs animate-in fade-in duration-200">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-emerald-300 bg-emerald-50 px-4 sm:px-6 py-3 text-xs text-emerald-950 shadow-xs animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-xs">✓</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-xs shrink-0">✓</span>
             <div>
               <span className="font-bold text-sm">Optimization plan accepted & materialized!</span>
               <p className="text-[11px] text-emerald-800">Routes have been created in the database and assigned to vehicles.</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               className="btn-primary bg-emerald-700 hover:bg-emerald-800 text-xs px-3 py-1.5"
               onClick={() => navigate("/live")}
@@ -328,10 +367,12 @@ export default function RoutePlanner() {
         </div>
       )}
 
-      {/* 12-Column Main Workspace */}
-      <div className="grid flex-1 grid-cols-12 gap-0 overflow-hidden">
+      {/* Main Workspace (Mobile tabbed, Desktop 12-column) */}
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-12 gap-0 overflow-hidden">
         {/* LEFT COLUMN (3 cols): Pre-Optimization Intelligence & Order Selection */}
-        <div className="col-span-3 flex flex-col overflow-hidden border-r border-ink-200 bg-white">
+        <div className={`lg:col-span-3 flex flex-col overflow-hidden border-r border-ink-200 bg-white ${
+          mobileTab === "orders" ? "flex flex-1 w-full" : "hidden lg:flex"
+        }`}>
           <div className="p-3 border-b border-ink-100 bg-slate-50 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-ink-700">Pre-Opt Intelligence</h3>
@@ -427,7 +468,9 @@ export default function RoutePlanner() {
         </div>
 
         {/* CENTER COLUMN (5 cols): Interactive Geospatial Map */}
-        <div className="col-span-5 relative bg-slate-100">
+        <div className={`lg:col-span-5 relative bg-slate-100 ${
+          mobileTab === "map" ? "flex flex-1 w-full min-h-[420px] h-full" : "hidden lg:block"
+        }`}>
           <MapContainer center={DEFAULT_CENTER} zoom={11} className="h-full w-full">
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap" />
             <MapAutoBounds points={mapPoints} initialOnly={true} />
@@ -477,7 +520,9 @@ export default function RoutePlanner() {
         </div>
 
         {/* RIGHT COLUMN (4 cols): Solver Control Panel & Optimization Results */}
-        <div className="col-span-4 flex flex-col overflow-y-auto border-l border-ink-200 bg-white">
+        <div className={`lg:col-span-4 flex flex-col overflow-y-auto border-l border-ink-200 bg-white ${
+          mobileTab === "results" ? "flex flex-1 w-full" : "hidden lg:flex"
+        }`}>
           {/* Solver Controls */}
           <div className="p-4 border-b border-ink-200 space-y-3 bg-slate-50/50">
             <div className="flex items-center justify-between">
